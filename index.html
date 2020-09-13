@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Hello, World!</title>
+</head>
+<script type="text/javascript" language="javascript">
+function send()
+{
+    var txt = "";
+    request = new XMLHttpRequest();
+
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myObj = JSON.parse(this.responseText);
+            txt += "<table border='1'>"
+            txt += "<tr><th>Name</th> <th>Email</th></tr>";
+            for (x in myObj) {
+            txt += "<tr><td>" + myObj[x].name + "</td>";
+            txt += "<td>" + myObj[x].email + "</td></tr>";
+            }
+            txt += "</table>"    
+            document.getElementById("demo").innerHTML = txt;
+        }
+    };
+    request.open('GET', 'http://localhost:8080/demo/all');
+    request.send();
+
+}
+
+
+function sendJSON(){ 
+               
+               let result = document.querySelector('.result'); 
+               let name = document.querySelector('#name'); 
+               let email = document.querySelector('#email'); 
+                  
+               // Creating a XHR object 
+               let xhr = new XMLHttpRequest(); 
+           
+               // open a connection 
+               xhr.open("POST", 'http://localhost:8080/demo/add1', true); 
+     
+               // Set the request header i.e. which type of content you are sending 
+               xhr.setRequestHeader("Content-Type", "application/json"); 
+     
+               // Create a state change callback 
+               xhr.onreadystatechange = function () { 
+                   if (xhr.readyState === 4 && xhr.status === 200) { 
+     
+                       // Print received data from server 
+                       result.innerHTML = this.responseText; 
+     
+                   } 
+               }; 
+     
+               // Converting JSON data to string 
+               var data = JSON.stringify({ "name": name.value, "email": email.value }); 
+     
+               // Sending data with the request 
+               xhr.send(data); 
+           }
+   
+</script>
+<body id='bod'>
+    <p> 
+        <!-- Making a text input -->
+        <input type="text" id="name" placeholder="Your name"> 
+        <input type="email" id="email" placeholder="Email"> 
+          
+        <!-- Button to send data -->
+        <button onclick="sendJSON()">Send data</button> 
+  
+      <!-- For printing result from server -->
+      <p class="result" style="color:green"></p> 
+      
+   </p> 
+    <button type="submit" onclick="javascript:send()">Show all data</button>
+    <div id='div'>
+        <p id="demo"></p>
+    </div>
+</body>
+</html>
