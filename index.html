@@ -23,7 +23,7 @@ function send()
             document.getElementById("demo").innerHTML = txt;
         }
     };
-    request.open('GET', 'http://localhost:8080/demo/all');
+    request.open('GET', 'http://localhost/demo/all');
     request.send();
 
 }
@@ -39,7 +39,7 @@ function sendJSON(){
                let xhr = new XMLHttpRequest(); 
            
                // open a connection 
-               xhr.open("POST", 'http://localhost:8080/demo/add1', true); 
+               xhr.open("POST", 'http://localhost/demo/add1', true); 
      
                // Set the request header i.e. which type of content you are sending 
                xhr.setRequestHeader("Content-Type", "application/json"); 
